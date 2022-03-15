@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+set -eo pipefail
+
+# shellcheck disable=SC1091
+source /usr/local/lib/log.sh
+
+if [ -n "${KC_HTTPS_CERTIFICATE_FILE}" ] && [ -n "${KC_HTTPS_CERTIFICATE_KEY_FILE}" ]; then
+    if [ ! -f "${KC_HTTPS_CERTIFICATE_FILE}" ] && [ ! -f "${KC_HTTPS_CERTIFICATE_KEY_FILE}" ]; then
+        log_info "Generate self-signed certificate files"
+        openssl req \
+            -new \
+            -newkey rsa:4006 \
+            -sha256 \
+            -days 365 \
+            -nodes \
+            -x509 \
+            -keyout "${KC_HTTPS_CERTIFICATE_KEY_FILE}" \
+            -out "${KC_HTTPS_CERTIFICATE_FILE}" \
+            -subj "/CN=localhost" >&/dev/null
+    fi
+fi
+
+if [ -n "$KC_DB_URL_HOST" ]; then
+    log_info "Wait for database server on '${KC_DB_URL_HOST:-mariadb:3306}'"
+    /usr/local/bin/wait-for "${KC_DB_URL_HOST:-mariadb:3306}"
+fi
+
+log_info "Start Keycloak\n"
+exec /opt/keycloak/bin/kc.sh "$@"
