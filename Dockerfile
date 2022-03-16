@@ -28,9 +28,9 @@ RUN microdnf install -y openssl nmap-ncat && \
     curl -SsL -o /usr/local/bin/wait-for "https://github.com/thegeeklab/wait-for/releases/download/${WAIT_FOR_VERSION}/wait-for" && \
     chmod 755 /usr/local/bin/gomplate && \
     chmod 755 /usr/local/bin/wait-for && \
-    mkdir -p /opt/keycloak/data && \
-    chown -R 1000:root /opt/keycloak/data && \
-    chmod 0755 /opt/keycloak/data && \
+    mkdir -p /opt/keycloak/themes /opt/keycloak/providers /opt/keycloak/dependencies && \
+    chown -R 1000:root /opt/keycloak/themes /opt/keycloak/providers /opt/keycloak/dependencies && \
+    chmod 0755 /opt/keycloak/themes /opt/keycloak/providers /opt/keycloak/dependencies && \
     microdnf clean all && \
     rm -rf /var/cache/yum/*
 
