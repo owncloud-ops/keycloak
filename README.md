@@ -17,6 +17,10 @@ KC_DB=mariadb
 KC_METRICS_ENABLED=true
 ```
 
+## Custom Providers
+
+- [sventorben/keycloak-restrict-client-auth](https://github.com/sventorben/keycloak-restrict-client-auth)
+
 ## Build
 
 ```Shell
