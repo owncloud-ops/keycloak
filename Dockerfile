@@ -4,7 +4,7 @@ ENV KC_DB=mariadb
 ENV KC_METRICS_ENABLED=true
 
 # renovate: datasource=github-releases depName=sventorben/keycloak-restrict-client-auth
-ENV RESTRICT_CLIENT_AUTH_VERSION="${RESTRICT_CLIENT_AUTH_VERSION:- v16.0.1}"
+ENV RESTRICT_CLIENT_AUTH_VERSION="${RESTRICT_CLIENT_AUTH_VERSION:-v16.0.1}"
 
 RUN mkdir -p /opt/keycloak/providers && \
     curl -SsL -o \
