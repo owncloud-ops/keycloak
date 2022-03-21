@@ -2,6 +2,7 @@ FROM quay.io/keycloak/keycloak:17.0.0@sha256:ab3b72a44813902fe44c9b927527f96096d
 
 ENV KC_DB=mariadb
 ENV KC_METRICS_ENABLED=true
+ENV KC_HTTP_RELATIVE_PATH=/auth
 
 # renovate: datasource=github-releases depName=sventorben/keycloak-restrict-client-auth
 ENV RESTRICT_CLIENT_AUTH_VERSION="${RESTRICT_CLIENT_AUTH_VERSION:-v17.0.0}"
