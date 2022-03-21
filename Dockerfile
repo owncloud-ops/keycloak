@@ -2,7 +2,15 @@ FROM quay.io/keycloak/keycloak:17.0.0@sha256:ab3b72a44813902fe44c9b927527f96096d
 
 ENV KC_DB=mariadb
 ENV KC_METRICS_ENABLED=true
-RUN /opt/keycloak/bin/kc.sh build
+
+# renovate: datasource=github-releases depName=sventorben/keycloak-restrict-client-auth
+ENV RESTRICT_CLIENT_AUTH_VERSION="${RESTRICT_CLIENT_AUTH_VERSION:-v16.1.0}"
+
+RUN mkdir -p /opt/keycloak/providers && \
+    curl -SsL -o \
+        /opt/keycloak/providers/keycloak-restrict-client-auth.jar \
+        "https://github.com/sventorben/keycloak-restrict-client-auth/releases/download/${RESTRICT_CLIENT_AUTH_VERSION}/keycloak-restrict-client-auth.jar" && \
+    /opt/keycloak/bin/kc.sh build
 
 FROM quay.io/keycloak/keycloak:17.0.0@sha256:ab3b72a44813902fe44c9b927527f96096d4f9cbc4c881234b7b6bbc884d8dd8
 
@@ -19,6 +27,7 @@ ENV GOMPLATE_VERSION="${GOMPLATE_VERSION:-v3.10.0}"
 ENV WAIT_FOR_VERSION="${WAIT_FOR_VERSION:-v0.2.0}"
 
 COPY --from=builder /opt/keycloak/lib/quarkus/ /opt/keycloak/lib/quarkus/
+COPY --from=builder /opt/keycloak/providers/ /opt/keycloak/providers/
 ADD overlay/ /
 
 USER 0
