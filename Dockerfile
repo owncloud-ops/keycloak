@@ -22,10 +22,16 @@ LABEL org.opencontainers.image.url="https://github.com/owncloud-ops/keycloak"
 LABEL org.opencontainers.image.source="https://github.com/owncloud-ops/keycloak"
 LABEL org.opencontainers.image.documentation="https://github.com/owncloud-ops/keycloak"
 
+ARG GOMPLATE_VERSION
+ARG WAIT_FOR_VERSION
+ARG CONTAINER_LIBRARY_VERSION
+
 # renovate: datasource=github-releases depName=hairyhenderson/gomplate
 ENV GOMPLATE_VERSION="${GOMPLATE_VERSION:-v3.10.0}"
 # renovate: datasource=github-releases depName=thegeeklab/wait-for
 ENV WAIT_FOR_VERSION="${WAIT_FOR_VERSION:-v0.2.0}"
+# renovate: datasource=github-releases depName=owncloud-ops/container-library
+ENV CONTAINER_LIBRARY_VERSION="${CONTAINER_LIBRARY_VERSION:-v0.1.0}"
 
 COPY --from=builder /opt/keycloak/lib/quarkus/ /opt/keycloak/lib/quarkus/
 COPY --from=builder /opt/keycloak/providers/ /opt/keycloak/providers/
@@ -33,9 +39,10 @@ ADD overlay/ /
 
 USER 0
 
-RUN microdnf install -y openssl nmap-ncat && \
+RUN microdnf install -y openssl nmap-ncat tar gzip && \
     curl -SsL -o /usr/local/bin/gomplate "https://github.com/hairyhenderson/gomplate/releases/download/${GOMPLATE_VERSION}/gomplate_linux-amd64-slim" && \
     curl -SsL -o /usr/local/bin/wait-for "https://github.com/thegeeklab/wait-for/releases/download/${WAIT_FOR_VERSION}/wait-for" && \
+    curl -SsL "https://github.com/owncloud-ops/container-library/releases/download/${CONTAINER_LIBRARY_VERSION}/container-library.tar.gz" | tar xz -C / && \
     chmod 755 /usr/local/bin/gomplate && \
     chmod 755 /usr/local/bin/wait-for && \
     mkdir -p /opt/keycloak/themes /opt/keycloak/providers /opt/keycloak/dependencies && \
