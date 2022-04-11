@@ -30,4 +30,4 @@ docker build -f Dockerfile -t keycloak:latest .
 
 ## License
 
-This project is licensed under the Apache 2.0 License - see the [LICENSE](https://github.com/owncloud-ops/keycloak/blob/master/LICENSE) file for details.
+This project is licensed under the Apache 2.0 License - see the [LICENSE](https://github.com/owncloud-ops/keycloak/blob/main/LICENSE) file for details.
