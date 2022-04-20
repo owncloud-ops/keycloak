@@ -5,7 +5,7 @@ ENV KC_METRICS_ENABLED=true
 ENV KC_HTTP_RELATIVE_PATH=/auth
 
 # renovate: datasource=github-releases depName=sventorben/keycloak-restrict-client-auth
-ENV RESTRICT_CLIENT_AUTH_VERSION="${RESTRICT_CLIENT_AUTH_VERSION:-v17.0.0}"
+ENV RESTRICT_CLIENT_AUTH_VERSION="${RESTRICT_CLIENT_AUTH_VERSION:-v18.0.0}"
 
 RUN mkdir -p /opt/keycloak/providers && \
     curl -SsL -o \
