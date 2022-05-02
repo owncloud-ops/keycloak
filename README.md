@@ -14,6 +14,7 @@ Custom container image for [Keycloak](https://www.keycloak.org/). More details a
 
 ```Shell
 KC_DB=mariadb
+KC_HEALTH_ENABLED=true
 KC_METRICS_ENABLED=true
 KC_HTTP_RELATIVE_PATH=/auth
 ```
