@@ -2,6 +2,7 @@ FROM quay.io/keycloak/keycloak:18.0.0@sha256:5794f1102b1104c8f8066adfb4c07d178c6
 
 ENV KC_DB=mariadb
 ENV KC_METRICS_ENABLED=true
+ENV KC_HEALTH_ENABLED=true
 ENV KC_HTTP_RELATIVE_PATH=/auth
 
 # renovate: datasource=github-releases depName=sventorben/keycloak-restrict-client-auth
