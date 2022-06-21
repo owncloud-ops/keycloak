@@ -9,7 +9,7 @@ ENV KC_HTTP_RELATIVE_PATH=/auth
 ENV RESTRICT_CLIENT_AUTH_VERSION="${RESTRICT_CLIENT_AUTH_VERSION:-v18.0.0}"
 
 RUN mkdir -p /opt/keycloak/providers && \
-    curl -SsL -o \
+    curl -SsfL -o \
         /opt/keycloak/providers/keycloak-restrict-client-auth.jar \
         "https://github.com/sventorben/keycloak-restrict-client-auth/releases/download/${RESTRICT_CLIENT_AUTH_VERSION}/keycloak-restrict-client-auth.jar" && \
     /opt/keycloak/bin/kc.sh build
@@ -41,9 +41,9 @@ ADD overlay/ /
 USER 0
 
 RUN microdnf install -y openssl nmap-ncat tar gzip && \
-    curl -SsL -o /usr/local/bin/gomplate "https://github.com/hairyhenderson/gomplate/releases/download/${GOMPLATE_VERSION}/gomplate_linux-amd64" && \
-    curl -SsL -o /usr/local/bin/wait-for "https://github.com/thegeeklab/wait-for/releases/download/${WAIT_FOR_VERSION}/wait-for" && \
-    curl -SsL "https://github.com/owncloud-ops/container-library/releases/download/${CONTAINER_LIBRARY_VERSION}/container-library.tar.gz" | tar xz -C / && \
+    curl -SsfL -o /usr/local/bin/gomplate "https://github.com/hairyhenderson/gomplate/releases/download/${GOMPLATE_VERSION}/gomplate_linux-amd64" && \
+    curl -SsfL -o /usr/local/bin/wait-for "https://github.com/thegeeklab/wait-for/releases/download/${WAIT_FOR_VERSION}/wait-for" && \
+    curl -SsfL "https://github.com/owncloud-ops/container-library/releases/download/${CONTAINER_LIBRARY_VERSION}/container-library.tar.gz" | tar xz -C / && \
     chmod 755 /usr/local/bin/gomplate && \
     chmod 755 /usr/local/bin/wait-for && \
     mkdir -p /opt/keycloak/themes /opt/keycloak/providers /opt/keycloak/dependencies && \
