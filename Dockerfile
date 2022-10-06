@@ -1,4 +1,4 @@
-FROM quay.io/keycloak/keycloak:19.0.2@sha256:e5f375089926aae34abab1b95937fb0721121d5b2016e89c89a4817f59c07e91 as builder
+FROM quay.io/keycloak/keycloak:19.0.3@sha256:0b5945042981d393dc252b816eebe4941f72f76bb7f87aa36edbdacdc7a0ce96 as builder
 
 ENV KC_DB=mariadb
 ENV KC_METRICS_ENABLED=true
@@ -14,7 +14,7 @@ RUN mkdir -p /opt/keycloak/providers && \
         "https://github.com/sventorben/keycloak-restrict-client-auth/releases/download/${RESTRICT_CLIENT_AUTH_VERSION}/keycloak-restrict-client-auth.jar" && \
     /opt/keycloak/bin/kc.sh build
 
-FROM quay.io/keycloak/keycloak:19.0.2@sha256:e5f375089926aae34abab1b95937fb0721121d5b2016e89c89a4817f59c07e91
+FROM quay.io/keycloak/keycloak:19.0.3@sha256:0b5945042981d393dc252b816eebe4941f72f76bb7f87aa36edbdacdc7a0ce96
 
 LABEL maintainer="ownCloud GmbH"
 LABEL org.opencontainers.image.authors="ownCloud GmbH"
