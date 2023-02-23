@@ -8,7 +8,8 @@ ENV KC_HTTP_RELATIVE_PATH=/auth
 # renovate: datasource=github-releases depName=sventorben/keycloak-restrict-client-auth
 ENV RESTRICT_CLIENT_AUTH_VERSION="${RESTRICT_CLIENT_AUTH_VERSION:-v20.0.1}"
 
-RUN mkdir -p /opt/keycloak/providers && \
+RUN microdnf install -y curl && \
+    mkdir -p /opt/keycloak/providers && \
     curl -SsfL -o \
         /opt/keycloak/providers/keycloak-restrict-client-auth.jar \
         "https://github.com/sventorben/keycloak-restrict-client-auth/releases/download/${RESTRICT_CLIENT_AUTH_VERSION}/keycloak-restrict-client-auth.jar" && \
