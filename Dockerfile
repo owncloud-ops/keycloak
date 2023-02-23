@@ -40,7 +40,7 @@ ADD overlay/ /
 
 USER 0
 
-RUN microdnf install -y openssl nmap-ncat tar gzip && \
+RUN microdnf install -y openssl nmap-ncat tar gzip curl && \
     curl -SsfL -o /usr/local/bin/gomplate "https://github.com/hairyhenderson/gomplate/releases/download/${GOMPLATE_VERSION}/gomplate_linux-amd64" && \
     curl -SsfL -o /usr/local/bin/wait-for "https://github.com/thegeeklab/wait-for/releases/download/${WAIT_FOR_VERSION}/wait-for" && \
     curl -SsfL "https://github.com/owncloud-ops/container-library/releases/download/${CONTAINER_LIBRARY_VERSION}/container-library.tar.gz" | tar xz -C / && \
@@ -49,6 +49,7 @@ RUN microdnf install -y openssl nmap-ncat tar gzip && \
     mkdir -p /opt/keycloak/themes /opt/keycloak/providers /opt/keycloak/dependencies && \
     chown -R 1000:root /opt/keycloak/themes /opt/keycloak/providers /opt/keycloak/dependencies && \
     chmod 0755 /opt/keycloak/themes /opt/keycloak/providers /opt/keycloak/dependencies && \
+    microdnf -y remove tar gzip curl && \
     microdnf clean all && \
     rm -rf /var/cache/yum/*
 
