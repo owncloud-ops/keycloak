@@ -17,6 +17,9 @@ KC_DB=mariadb
 KC_HEALTH_ENABLED=true
 KC_METRICS_ENABLED=true
 KC_HTTP_RELATIVE_PATH=/auth
+# If set and the specified file does not exist when the container is started,
+# a new keystore for https certificates is automatically generated.
+KC_HTTPS_KEY_STORE_FILE=
 ```
 
 ## Custom Providers

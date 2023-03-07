@@ -11,7 +11,7 @@ if [ -n "${KC_HTTPS_KEY_STORE_FILE}" ]; then
         keytool \
             -genkeypair \
             -validity 365 \
-            -storepass "${KC_HTTPS_KEY_STORE_PASSWORD}" \
+            -storepass "${KC_HTTPS_KEY_STORE_PASSWORD:-password}" \
             -storetype PKCS12 \
             -keyalg RSA \
             -keysize 4006 -dname "CN=localhost" \
