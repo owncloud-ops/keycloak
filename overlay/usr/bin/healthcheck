@@ -1,11 +1,10 @@
 #!/usr/bin/env bash
-
 set -eo pipefail
 
 exec 5<>/dev/tcp/localhost/8080
 
 # Send request
-printf "GET /health HTTP/1.1\r\n" >&5
+printf "GET %s/health HTTP/1.1\r\n" "${KC_HTTP_RELATIVE_PATH%/}" >&5
 printf "Connection:close\r\n" >&5
 printf "\r\n" >&5
 

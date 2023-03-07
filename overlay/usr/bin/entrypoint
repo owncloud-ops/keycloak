@@ -10,6 +10,7 @@ if [ -n "${KC_HTTPS_KEY_STORE_FILE}" ]; then
         log_info "Generate self-signed certificate files"
         keytool \
             -genkeypair \
+            -validity 365 \
             -storepass "${KC_HTTPS_KEY_STORE_PASSWORD}" \
             -storetype PKCS12 \
             -keyalg RSA \

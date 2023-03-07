@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi8/ubi-minimal as fetcher
+FROM registry.access.redhat.com/ubi9/ubi-minimal as fetcher
 
 ARG GOMPLATE_VERSION
 ARG WAIT_FOR_VERSION
@@ -12,9 +12,9 @@ ENV WAIT_FOR_VERSION="${WAIT_FOR_VERSION:-v0.4.2}"
 # renovate: datasource=github-releases depName=owncloud-ops/container-library
 ENV CONTAINER_LIBRARY_VERSION="${CONTAINER_LIBRARY_VERSION:-v0.1.0}"
 # renovate: datasource=github-releases depName=sventorben/keycloak-restrict-client-auth
-ENV RESTRICT_CLIENT_AUTH_VERSION="${RESTRICT_CLIENT_AUTH_VERSION:-v20.0.1}"
+ENV RESTRICT_CLIENT_AUTH_VERSION="${RESTRICT_CLIENT_AUTH_VERSION:-v21.0.0}"
 
-RUN microdnf install -y tar gzip curl && \
+RUN microdnf install -y tar gzip && \
     mkdir -p /opt/fetcher && \
     mkdir -p /opt/fetcher/container-library && \
     curl -SsfL -o /opt/fetcher/gomplate "https://github.com/hairyhenderson/gomplate/releases/download/${GOMPLATE_VERSION}/gomplate_linux-amd64" && \
@@ -24,7 +24,7 @@ RUN microdnf install -y tar gzip curl && \
     curl -SsfL -o /opt/fetcher/keycloak-restrict-client-auth.jar \
         "https://github.com/sventorben/keycloak-restrict-client-auth/releases/download/${RESTRICT_CLIENT_AUTH_VERSION}/keycloak-restrict-client-auth.jar"
 
-FROM quay.io/keycloak/keycloak:21.0.0@sha256:2ff491b346361b84f5923285fa80bd817db211c24c3188bf68d52554a8fce5bf as builder
+FROM quay.io/keycloak/keycloak:21.0.1 as builder
 
 ENV KC_DB=mariadb
 ENV KC_METRICS_ENABLED=true
@@ -35,7 +35,7 @@ COPY --from=fetcher --chown=1000 /opt/fetcher/keycloak-restrict-client-auth.jar 
 
 RUN /opt/keycloak/bin/kc.sh build
 
-FROM quay.io/keycloak/keycloak:21.0.0@sha256:2ff491b346361b84f5923285fa80bd817db211c24c3188bf68d52554a8fce5bf
+FROM quay.io/keycloak/keycloak:21.0.1
 
 LABEL maintainer="ownCloud GmbH"
 LABEL org.opencontainers.image.authors="ownCloud GmbH"
@@ -43,6 +43,8 @@ LABEL org.opencontainers.image.title="Keycloak"
 LABEL org.opencontainers.image.url="https://github.com/owncloud-ops/keycloak"
 LABEL org.opencontainers.image.source="https://github.com/owncloud-ops/keycloak"
 LABEL org.opencontainers.image.documentation="https://github.com/owncloud-ops/keycloak"
+
+ENV KC_HTTP_RELATIVE_PATH=/auth
 
 COPY --from=builder /opt/keycloak/lib/quarkus/ /opt/keycloak/lib/quarkus/
 COPY --from=builder /opt/keycloak/providers/ /opt/keycloak/providers/
@@ -63,5 +65,4 @@ USER 1000
 
 WORKDIR /opt/keycloak
 ENTRYPOINT ["/usr/bin/entrypoint"]
-HEALTHCHECK --interval=5s --timeout=5s --retries=10 CMD /usr/bin/healthcheck
 CMD []

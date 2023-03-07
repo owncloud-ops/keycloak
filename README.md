@@ -3,7 +3,7 @@
 [![Build Status](https://drone.owncloud.com/api/badges/owncloud-ops/keycloak/status.svg)](https://drone.owncloud.com/owncloud-ops/keycloak/)
 [![Docker Hub](https://img.shields.io/badge/docker-latest-blue.svg?logo=docker&logoColor=white)](https://hub.docker.com/r/owncloudops/keycloak)
 
-Custom container image for [Keycloak](https://www.keycloak.org/). More details about optimized container images can be found in the Keycloak [documentation](https://www.keycloak.org/server/containers).
+Custom container image for [Keycloak](https://www.keycloak.org/). For more details about optimized container images, see the Keycloak [documentation](https://www.keycloak.org/server/containers). The embedded healthcheck script is disabled by default and only works on an HTTP port.
 
 ## Ports
 
