@@ -6,7 +6,7 @@ ENV KC_HEALTH_ENABLED=true
 ENV KC_HTTP_RELATIVE_PATH=/auth
 
 # renovate: datasource=github-releases depName=sventorben/keycloak-restrict-client-auth
-ENV RESTRICT_CLIENT_AUTH_VERSION="${RESTRICT_CLIENT_AUTH_VERSION:-v20.0.1}"
+ENV RESTRICT_CLIENT_AUTH_VERSION="${RESTRICT_CLIENT_AUTH_VERSION:-v21.0.0}"
 
 RUN mkdir -p /opt/keycloak/providers && \
     curl -SsfL -o \
