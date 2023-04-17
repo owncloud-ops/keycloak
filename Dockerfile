@@ -30,6 +30,7 @@ ENV KC_DB=mariadb
 ENV KC_METRICS_ENABLED=true
 ENV KC_HEALTH_ENABLED=true
 ENV KC_HTTP_RELATIVE_PATH=/auth
+ENV KC_FEATURES=recovery-codes
 
 COPY --from=fetcher --chown=1000 /opt/fetcher/keycloak-restrict-client-auth.jar /opt/keycloak/providers/keycloak-restrict-client-auth.jar
 
