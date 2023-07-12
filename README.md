@@ -15,13 +15,22 @@ Custom container image for [Keycloak](https://www.keycloak.org/). For more detai
 
 ```Shell
 KC_DB=mariadb
+
 KC_HEALTH_ENABLED=true
 KC_METRICS_ENABLED=true
+
 KC_HTTP_RELATIVE_PATH=/auth
 # If set and the specified file does not exist when the container is started,
 # a new keystore for https certificates is automatically generated.
 KC_HTTPS_KEY_STORE_FILE=
-KC_FEATURES=recovery-codes
+
+# Infinispan cache configuration. Note: The default local cache configuration
+# from `cache-ispn-local.xml` only works on single node setups!
+KC_CACHE=ispn
+KC_CACHE_CONFIG_FILE=cache-ispn-local.xml
+
+KC_TRANSACTION_XA_ENABLED=true
+QUARKUS_TRANSACTION_MANAGER_ENABLE_RECOVERY=true
 ```
 
 ## Custom Providers
