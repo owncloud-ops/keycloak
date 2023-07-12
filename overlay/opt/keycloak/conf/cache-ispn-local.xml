@@ -5,6 +5,9 @@
 
     <cache-container name="keycloak">
         <transport lock-timeout="60000"/>
+        <global-state>
+            <persistent-location path="/opt/keycloak/cache"/>
+        </global-state>
         <local-cache name="realms" simple-cache="true">
             <encoding>
                 <key media-type="application/x-java-object"/>
@@ -19,24 +22,36 @@
             </encoding>
             <memory max-count="10000"/>
         </local-cache>
-        <distributed-cache name="sessions" owners="2">
+        <local-cache name="sessions">
             <expiration lifespan="-1"/>
-        </distributed-cache>
-        <distributed-cache name="authenticationSessions" owners="2">
+            <persistence passivation="true">
+                <file-store path="/opt/keycloak/cache" shared="false" purge="false"/>
+            </persistence>
+            <memory max-count="10000"/>
+        </local-cache>
+        <local-cache name="clientSessions">
             <expiration lifespan="-1"/>
-        </distributed-cache>
-        <distributed-cache name="offlineSessions" owners="2">
+            <persistence passivation="true">
+                <file-store path="/opt/keycloak/cache" shared="false" purge="false"/>
+            </persistence>
+            <memory max-count="10000"/>
+        </local-cache>
+        <local-cache name="authenticationSessions">
             <expiration lifespan="-1"/>
-        </distributed-cache>
-        <distributed-cache name="clientSessions" owners="2">
+            <persistence passivation="true">
+                <file-store path="/opt/keycloak/cache" shared="false" purge="false"/>
+            </persistence>
+            <memory max-count="10000"/>
+        </local-cache>
+        <local-cache name="offlineSessions">
             <expiration lifespan="-1"/>
-        </distributed-cache>
-        <distributed-cache name="offlineClientSessions" owners="2">
+        </local-cache>
+        <local-cache name="offlineClientSessions">
             <expiration lifespan="-1"/>
-        </distributed-cache>
-        <distributed-cache name="loginFailures" owners="2">
+        </local-cache>
+        <local-cache name="loginFailures">
             <expiration lifespan="-1"/>
-        </distributed-cache>
+        </local-cache>
         <local-cache name="authorization" simple-cache="true">
             <encoding>
                 <key media-type="application/x-java-object"/>
@@ -55,13 +70,13 @@
             <expiration max-idle="3600000"/>
             <memory max-count="1000"/>
         </local-cache>
-        <distributed-cache name="actionTokens" owners="2">
+        <local-cache name="actionTokens">
             <encoding>
                 <key media-type="application/x-java-object"/>
                 <value media-type="application/x-java-object"/>
             </encoding>
             <expiration max-idle="-1" lifespan="-1" interval="300000"/>
             <memory max-count="-1"/>
-        </distributed-cache>
+        </local-cache>
     </cache-container>
 </infinispan>

@@ -26,13 +26,17 @@ RUN microdnf install -y tar gzip && \
 
 FROM quay.io/keycloak/keycloak:22.0.0@sha256:5da3d9c7ca47e311bf170b5f0af8b859e0e94402939e4d875dee6c847359558a as builder
 
-ENV KC_DB=mariadb
-ENV KC_METRICS_ENABLED=true
-ENV KC_HEALTH_ENABLED=true
-ENV KC_HTTP_RELATIVE_PATH=/auth
-ENV KC_FEATURES=recovery-codes
+ARG KC_DB=mariadb
+ARG KC_METRICS_ENABLED=true
+ARG KC_HEALTH_ENABLED=true
+ARG KC_HTTP_RELATIVE_PATH=/auth
+ARG KC_FEATURES=recovery-codes
+ARG KC_CACHE=ispn
+ARG KC_CACHE_CONFIG_FILE=cache-ispn-local.xml
+ARG KC_TRANSACTION_XA_ENABLED=true
 
 COPY --from=fetcher --chown=1000 /opt/fetcher/keycloak-restrict-client-auth.jar /opt/keycloak/providers/keycloak-restrict-client-auth.jar
+ADD overlay/opt/keycloak/conf/ /opt/keycloak/conf/
 
 RUN /opt/keycloak/bin/kc.sh build
 
@@ -46,6 +50,7 @@ LABEL org.opencontainers.image.source="https://github.com/owncloud-ops/keycloak"
 LABEL org.opencontainers.image.documentation="https://github.com/owncloud-ops/keycloak"
 
 ENV KC_HTTP_RELATIVE_PATH=/auth
+ENV QUARKUS_TRANSACTION_MANAGER_ENABLE_RECOVERY=true
 
 COPY --from=builder /opt/keycloak/lib/quarkus/ /opt/keycloak/lib/quarkus/
 COPY --from=builder /opt/keycloak/providers/ /opt/keycloak/providers/
@@ -58,9 +63,10 @@ USER 0
 
 RUN chmod 755 /usr/local/bin/gomplate && \
     chmod 755 /usr/local/bin/wait-for && \
-    mkdir -p /opt/keycloak/themes /opt/keycloak/providers /opt/keycloak/dependencies && \
-    chown -R 1000:root /opt/keycloak/themes /opt/keycloak/providers /opt/keycloak/dependencies && \
-    chmod 0755 /opt/keycloak/themes /opt/keycloak/providers /opt/keycloak/dependencies
+    mkdir -p /opt/keycloak/themes /opt/keycloak/providers /opt/keycloak/dependencies /opt/keycloak/cache && \
+    chown -R 1000:root /opt/keycloak/themes /opt/keycloak/providers /opt/keycloak/dependencies /opt/keycloak/cache /opt/keycloak/conf && \
+    chmod 0755 /opt/keycloak/themes /opt/keycloak/providers /opt/keycloak/dependencies && \
+    chmod 0700 /opt/keycloak/cache /opt/keycloak/conf
 
 USER 1000
 
