@@ -1,4 +1,4 @@
-FROM registry.access.redhat.com/ubi9/ubi-minimal@sha256:81c4c08610824091dc6a33800d6fba9a9b063935fa716e98f3b1dd36d4acc8ab as fetcher
+FROM registry.access.redhat.com/ubi9/ubi-minimal@sha256:c8c7a06ce1c5fa23c1cbd7a0fd891eacd099bc232aa9985ddb183cfe98d1deaf as fetcher
 
 ARG GOMPLATE_VERSION
 ARG WAIT_FOR_VERSION
