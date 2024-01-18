@@ -24,7 +24,7 @@ RUN microdnf install -y tar gzip && \
     curl -SsfL -o /opt/fetcher/keycloak-restrict-client-auth.jar \
         "https://github.com/sventorben/keycloak-restrict-client-auth/releases/download/${RESTRICT_CLIENT_AUTH_VERSION}/keycloak-restrict-client-auth.jar"
 
-FROM quay.io/keycloak/keycloak:23.0.4@sha256:4281aa5007b370de736969d991e0b63b45c389319f08948e834418b950c07155 as builder
+FROM quay.io/keycloak/keycloak:23.0.4@sha256:cff31dc6fbb0ab0b66176b990e6b9e262fa74a501abb9a4bfa4a529cbc8a526a as builder
 
 ARG KC_DB=mariadb
 ARG KC_METRICS_ENABLED=true
@@ -40,7 +40,7 @@ ADD overlay/opt/keycloak/conf/ /opt/keycloak/conf/
 
 RUN /opt/keycloak/bin/kc.sh build
 
-FROM quay.io/keycloak/keycloak:23.0.4@sha256:4281aa5007b370de736969d991e0b63b45c389319f08948e834418b950c07155
+FROM quay.io/keycloak/keycloak:23.0.4@sha256:cff31dc6fbb0ab0b66176b990e6b9e262fa74a501abb9a4bfa4a529cbc8a526a
 
 LABEL maintainer="ownCloud GmbH"
 LABEL org.opencontainers.image.authors="ownCloud GmbH"
