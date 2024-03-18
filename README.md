@@ -19,6 +19,7 @@ KC_DB=mariadb
 KC_HEALTH_ENABLED=true
 KC_METRICS_ENABLED=true
 
+# If this value is changed, the health check script must also be adjusted.
 KC_HTTP_RELATIVE_PATH=/auth
 # If set and the specified file does not exist when the container is started,
 # a new keystore for https certificates is automatically generated.
