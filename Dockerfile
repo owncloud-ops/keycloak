@@ -49,7 +49,6 @@ LABEL org.opencontainers.image.url="https://github.com/owncloud-ops/keycloak"
 LABEL org.opencontainers.image.source="https://github.com/owncloud-ops/keycloak"
 LABEL org.opencontainers.image.documentation="https://github.com/owncloud-ops/keycloak"
 
-ENV KC_HTTP_RELATIVE_PATH=/auth
 ENV QUARKUS_TRANSACTION_MANAGER_ENABLE_RECOVERY=true
 
 COPY --from=builder /opt/keycloak/lib/quarkus/ /opt/keycloak/lib/quarkus/
