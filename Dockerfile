@@ -12,7 +12,7 @@ ENV WAIT_FOR_VERSION="${WAIT_FOR_VERSION:-v0.4.2}"
 # renovate: datasource=github-releases depName=owncloud-ops/container-library
 ENV CONTAINER_LIBRARY_VERSION="${CONTAINER_LIBRARY_VERSION:-v0.1.0}"
 # renovate: datasource=github-releases depName=sventorben/keycloak-restrict-client-auth
-ENV RESTRICT_CLIENT_AUTH_VERSION="${RESTRICT_CLIENT_AUTH_VERSION:-v24.0.0}"
+ENV RESTRICT_CLIENT_AUTH_VERSION="${RESTRICT_CLIENT_AUTH_VERSION:-v26.0.0}"
 
 RUN microdnf install -y tar gzip && \
     mkdir -p /opt/fetcher && \
